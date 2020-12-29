@@ -16,7 +16,9 @@
 
 package etch.cameraiza.util
 
+import android.app.Activity
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Build
 import android.view.*
 import android.widget.ImageButton
@@ -24,17 +26,18 @@ import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 
 /** Combination of all flags required to put activity into immersive mode */
 const val FLAGS_FULLSCREEN =
-        View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                View.SYSTEM_UI_FLAG_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+    View.SYSTEM_UI_FLAG_LOW_PROFILE or
+            View.SYSTEM_UI_FLAG_FULLSCREEN or
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
 /** Milliseconds used for UI animations */
 const val ANIMATION_FAST_MILLIS = 50L
@@ -98,7 +101,7 @@ fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false):
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
 
-fun ImageView.setGlide(link: String){
+fun ImageView.setGlide(link: String) {
     Glide.with(this).load(link).into(this)
 }
 
@@ -108,4 +111,30 @@ fun Fragment.getScreenWidth(): Int {
 
 fun Fragment.getScreenHeight(): Int {
     return Resources.getSystem().displayMetrics.heightPixels
+}
+
+fun Activity.hideStatusBar() {
+    synchronized(this) {
+        /*Window w = appCompatActivity.getWindow();
+        View decorView = w.getDecorView();
+        // Hide Status Bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);*/
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+}
+
+fun Activity.setupStatusBarHidden() {
+    val w = window
+    w.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+    w.setFlags(
+        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+    )
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        w.statusBarColor = Color.TRANSPARENT
+    }
+    //w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+    //  w.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 }

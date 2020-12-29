@@ -16,7 +16,6 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
 import android.webkit.MimeTypeMap
-import androidx.annotation.NonNull
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
@@ -26,7 +25,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -61,6 +59,9 @@ class CameraizaFragment : Fragment() {
     @Inject
     lateinit var imagesAdapter: ImagesAdapter
 
+    @Inject
+    lateinit var mainImagesAdapter: MainImagesAdapter
+
 
     private val viewModel by viewModels<ImageViewModel>()
 
@@ -90,7 +91,7 @@ class CameraizaFragment : Fragment() {
             when (intent.getIntExtra(KEY_EVENT_EXTRA, KeyEvent.KEYCODE_UNKNOWN)) {
                 // When the volume down button is pressed, simulate a shutter button click
                 KeyEvent.KEYCODE_VOLUME_DOWN -> {
-                    binding.bottomSheet.btnCameraCapture.simulateClick()
+                    binding.btnCameraCapture.simulateClick()
                 }
             }
         }
@@ -153,6 +154,7 @@ class CameraizaFragment : Fragment() {
         // Set up the camera and its use cases
         setUpCamera()
 
+        handleClicks()
         setupPeekRecycler()
         setupMainRecycler()
         setupBottomSheet()
@@ -191,70 +193,66 @@ class CameraizaFragment : Fragment() {
     }
 
 
+    private fun handleClicks() {
+//        binding.bottomSheet.backButton.setOnClickListener {
+//            if (sheetBehavior?.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+//                sheetBehavior?.setState(BottomSheetBehavior.STATE_EXPANDED)
+//            } else {
+//                sheetBehavior?.setState(BottomSheetBehavior.STATE_COLLAPSED)
+//            }
+//        }
+    }
+
     private fun setupPeekRecycler() {
         binding.bottomSheet.peekRecyclerView.adapter = imagesAdapter
 
-        binding.bottomSheet.MainRecyclerView.setOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
-                sheetBehavior!!.isDraggable = !binding.bottomSheet.MainRecyclerView.canScrollVertically(-1)
-            }
-        })
+//        binding.bottomSheet.MainRecyclerView.setOnScrollListener(object :
+//            RecyclerView.OnScrollListener() {
+//            override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
+//                sheetBehavior!!.isDraggable = true
+//            }
+//        })
     }
 
     private fun setupMainRecycler() {
-        binding.bottomSheet.MainRecyclerView.adapter = imagesAdapter
-        binding.bottomSheet.MainRecyclerView.scrollToPosition(0);
+        binding.bottomSheet.MainRecyclerView.adapter = mainImagesAdapter
+        binding.bottomSheet.MainRecyclerView.scrollToPosition(0)
     }
 
     private fun setupBottomSheet() {
 
+        sheetBehavior!!.peekHeight = 600
         sheetBehavior!!.addBottomSheetCallback(object : BottomSheetCallback() {
 
             override fun onStateChanged(view: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                        if (binding.bottomSheet.MainRecyclerView.canScrollVertically(-1)) {
-                            binding.bottomSheet.MainRecyclerView.suppressLayout(true)
-                            sheetBehavior!!.isDraggable = true
-                        } else {
-                            binding.bottomSheet.MainRecyclerView.suppressLayout(false)
-                            sheetBehavior!!.isDraggable = false
-                        }
-                    }
-
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                        sheetBehavior!!.isDraggable = true
-                    }
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                        binding.bottomSheet.MainRecyclerView.suppressLayout(true)
-                        sheetBehavior!!.isDraggable = true
-                    }
-                }
             }
 
             override fun onSlide(view: View, v: Float) {
-                binding.bottomSheet.peekView.setAlpha(1.0f - v)
-                binding.bottomSheet.collapsedView.setAlpha(v)
+                binding.peekView.setAlpha(1.0f - v)
+                binding.bottomSheet.peekRecyclerView.setAlpha(1.0f - v)
+                binding.bottomSheet.MainRecyclerView.setAlpha(v)
+                binding.bottomSheet.topBar.setAlpha(v)
             }
         })
+
+
     }
 
     private fun setGalleryThumbnail(uri: Uri) {
 
         // Run the operations in the view's thread
-        binding.bottomSheet.btnPhotoView.post {
-            // Remove thumbnail padding
-            binding.bottomSheet.btnPhotoView.setPadding(
-                resources.getDimension(R.dimen.stroke_small).toInt()
-            )
-
-            // Load thumbnail into circular button using Glide
-            Glide.with(binding.bottomSheet.btnPhotoView)
-                .load(uri)
-                .apply(RequestOptions.circleCropTransform())
-                .into(binding.bottomSheet.btnPhotoView)
-        }
+//        binding.btnPhotoView.post {
+//            // Remove thumbnail padding
+//            binding.btnPhotoView.setPadding(
+//                resources.getDimension(R.dimen.stroke_small).toInt()
+//            )
+//
+//            // Load thumbnail into circular button using Glide
+//            Glide.with(binding.btnPhotoView)
+//                .load(uri)
+//                .apply(RequestOptions.circleCropTransform())
+//                .into(binding.btnPhotoView)
+//        }
     }
 
     /** Initialize CameraX, and prepare to bind the camera use cases  */
@@ -380,7 +378,7 @@ class CameraizaFragment : Fragment() {
         getLastImageTakenFromApp()
 
         // Listener for button used to capture photo
-        binding.bottomSheet.btnCameraCapture.setOnClickListener {
+        binding.btnCameraCapture.setOnClickListener {
 
             // Get a stable reference of the modifiable image capture use case
             imageCapture?.let { imageCapture ->
@@ -452,7 +450,7 @@ class CameraizaFragment : Fragment() {
         }
 
         // Setup for button used to switch cameras
-        binding.bottomSheet.btnCameraSwitch.let {
+        binding.btnCameraSwitch.let {
 
             // Disable the button until the camera is set up
             it.isEnabled = false
@@ -484,9 +482,9 @@ class CameraizaFragment : Fragment() {
     /** Enabled or disabled a button to switch cameras depending on the available cameras */
     private fun updateCameraSwitchButton() {
         try {
-            binding.bottomSheet.btnCameraSwitch.isEnabled = hasBackCamera() && hasFrontCamera()
+            binding.btnCameraSwitch.isEnabled = hasBackCamera() && hasFrontCamera()
         } catch (exception: CameraInfoUnavailableException) {
-            binding.bottomSheet.btnCameraSwitch.isEnabled = false
+            binding.btnCameraSwitch.isEnabled = false
         }
     }
 
@@ -608,7 +606,9 @@ class CameraizaFragment : Fragment() {
         viewModel.imagesLiveDataObserver().observe(viewLifecycleOwner, {
             if (it.size > 0) {
                 imagesAdapter.dataList = it.reversed()
+                mainImagesAdapter.dataList = it.reversed()
                 imagesAdapter.notifyDataSetChanged()
+                mainImagesAdapter.notifyDataSetChanged()
             }
         })
     }

@@ -1,12 +1,11 @@
-package etch.cameraiza
+package etch.cameraiza.framework
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import etch.cameraiza.R
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
 

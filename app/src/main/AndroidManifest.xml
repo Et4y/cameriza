@@ -25,7 +25,7 @@
         android:theme="@style/Theme.Camera">
 
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".framework.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

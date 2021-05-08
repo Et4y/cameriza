@@ -1,4 +1,4 @@
-package etch.cameraiza
+package etch.cameraiza.framework
 
 import android.Manifest
 import android.content.Context
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import etch.cameraiza.util.addFragmentWithoutBack
 
 private const val PERMISSIONS_REQUEST_CODE = 10
 private val PERMISSIONS_REQUIRED =
@@ -26,7 +27,7 @@ class PermissionsFragment : Fragment() {
             requestPermissions(PERMISSIONS_REQUIRED, PERMISSIONS_REQUEST_CODE)
         } else {
             // If permissions have already been granted, proceed
-            (activity as MainActivity).addFragmentWithoutBack(CameraizaFragment(),null,"")
+            (activity as MainActivity).addFragmentWithoutBack(GalleryFragment(), null, "")
         }
     }
 
@@ -37,8 +38,7 @@ class PermissionsFragment : Fragment() {
         if (requestCode == PERMISSIONS_REQUEST_CODE) {
             if (PackageManager.PERMISSION_GRANTED == grantResults.firstOrNull()) {
                 // Take the user to the success fragment when permission is granted
-                Toast.makeText(context, "Permission request granted", Toast.LENGTH_LONG).show()
-                (activity as MainActivity).addFragmentWithoutBack(CameraizaFragment(),null,"")
+                (activity as MainActivity).addFragmentWithoutBack(GalleryFragment(), null, "")
             } else {
                 Toast.makeText(context, "Permission request denied", Toast.LENGTH_LONG).show()
             }

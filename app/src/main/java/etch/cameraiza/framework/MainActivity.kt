@@ -1,24 +1,16 @@
-package etch.cameraiza
+package etch.cameraiza.framework
 
 import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.Window
 import android.view.WindowInsets
-import android.view.WindowManager
-import androidx.annotation.RequiresApi
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LifecycleOwner
 import dagger.hilt.android.AndroidEntryPoint
-import etch.cameraiza.util.hideStatusBar
-import etch.cameraiza.util.setupStatusBarHidden
+import etch.cameraiza.R
+import etch.cameraiza.framework.PermissionsFragment
+import etch.cameraiza.util.initFragment
 import java.io.File
 
 
@@ -42,12 +34,21 @@ class MainActivity : AppCompatActivity() {
                 it.hide(WindowInsets.Type.statusBars())
             }
 
+
         initFragment(PermissionsFragment(), "")
     }
 
 
-    private fun showSystemUI() {
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val findFragmentById = supportFragmentManager.findFragmentById(R.id.container)
+        Log.i("lsmdls", "onBackPressed: " + findFragmentById)
+        if (findFragmentById is GalleryFragment) {
+            findFragmentById.getAllImages()
+        }
+
     }
+
 
     companion object {
 

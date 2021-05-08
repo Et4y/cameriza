@@ -1,17 +1,17 @@
-package etch.cameraiza
+package etch.cameraiza.adapter
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import etch.cameraiza.R
 import etch.cameraiza.util.inflate
 import etch.cameraiza.util.setGlide
 import javax.inject.Inject
 
 
-class MainImagesAdapter @Inject constructor() :
-    RecyclerView.Adapter<MainImagesAdapter.ViewHolder>() {
+class ImagesAdapter @Inject constructor() :
+    RecyclerView.Adapter<ImagesAdapter.ViewHolder>() {
 
 
     var dataList: List<String>? = null
@@ -19,7 +19,7 @@ class MainImagesAdapter @Inject constructor() :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflatedView = parent.inflate(R.layout.item_main_images, false)
+        val inflatedView = parent.inflate(R.layout.item_images, false)
         return ViewHolder(inflatedView)
     }
 

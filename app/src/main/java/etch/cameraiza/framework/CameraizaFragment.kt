@@ -1,4 +1,4 @@
-package etch.cameraiza
+package etch.cameraiza.framework
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -20,16 +20,14 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import dagger.hilt.android.AndroidEntryPoint
+import etch.cameraiza.*
+import etch.cameraiza.adapter.ImagesAdapter
+import etch.cameraiza.adapter.MainImagesAdapter
 import etch.cameraiza.databinding.FragmentCameraBinding
 import etch.cameraiza.util.ANIMATION_FAST_MILLIS
 import etch.cameraiza.util.ANIMATION_SLOW_MILLIS
@@ -63,11 +61,9 @@ class CameraizaFragment : Fragment() {
     lateinit var mainImagesAdapter: MainImagesAdapter
 
 
-    private val viewModel by viewModels<ImageViewModel>()
 
     private lateinit var outputDirectory: File
     private lateinit var broadcastManager: LocalBroadcastManager
-    private var sheetBehavior: BottomSheetBehavior<*>? = null
 
     private var displayId: Int = -1
     private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
@@ -145,7 +141,7 @@ class CameraizaFragment : Fragment() {
         // Determine the output directory
         outputDirectory = MainActivity.getOutputDirectory(requireContext())
 
-        sheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.bottomSheet);
+//        sheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.bottomSheet);
 
 
         // Build UI controls
@@ -155,10 +151,6 @@ class CameraizaFragment : Fragment() {
         setUpCamera()
 
         handleClicks()
-        setupPeekRecycler()
-        setupMainRecycler()
-        setupBottomSheet()
-        imagesObserver()
 
     }
 
@@ -201,41 +193,6 @@ class CameraizaFragment : Fragment() {
 //                sheetBehavior?.setState(BottomSheetBehavior.STATE_COLLAPSED)
 //            }
 //        }
-    }
-
-    private fun setupPeekRecycler() {
-        binding.bottomSheet.peekRecyclerView.adapter = imagesAdapter
-
-//        binding.bottomSheet.MainRecyclerView.setOnScrollListener(object :
-//            RecyclerView.OnScrollListener() {
-//            override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
-//                sheetBehavior!!.isDraggable = true
-//            }
-//        })
-    }
-
-    private fun setupMainRecycler() {
-        binding.bottomSheet.MainRecyclerView.adapter = mainImagesAdapter
-        binding.bottomSheet.MainRecyclerView.scrollToPosition(0)
-    }
-
-    private fun setupBottomSheet() {
-
-        sheetBehavior!!.peekHeight = 600
-        sheetBehavior!!.addBottomSheetCallback(object : BottomSheetCallback() {
-
-            override fun onStateChanged(view: View, newState: Int) {
-            }
-
-            override fun onSlide(view: View, v: Float) {
-                binding.peekView.setAlpha(1.0f - v)
-                binding.bottomSheet.peekRecyclerView.setAlpha(1.0f - v)
-                binding.bottomSheet.MainRecyclerView.setAlpha(v)
-                binding.bottomSheet.topBar.setAlpha(v)
-            }
-        })
-
-
     }
 
     private fun setGalleryThumbnail(uri: Uri) {
@@ -330,7 +287,6 @@ class CameraizaFragment : Fragment() {
                     // Values returned from our analyzer are passed to the attached listener
                     // We log image analysis results here - you should do something useful
                     // instead!
-                    Log.d(TAG, "Average luminosity: $luma")
                 })
             }
 
@@ -602,16 +558,7 @@ class CameraizaFragment : Fragment() {
     }
 
 
-    private fun imagesObserver() {
-        viewModel.imagesLiveDataObserver().observe(viewLifecycleOwner, {
-            if (it.size > 0) {
-                imagesAdapter.dataList = it.reversed()
-                mainImagesAdapter.dataList = it.reversed()
-                imagesAdapter.notifyDataSetChanged()
-                mainImagesAdapter.notifyDataSetChanged()
-            }
-        })
-    }
+
 
     companion object {
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.etch.camera.CamerizaConst.Companion.SELECTED_IMAGES_PATH
 import com.etch.camera.ImageModel
 import com.etch.camera.ImageViewModel
 import com.etch.camera.adapter.MainImagesAdapter
@@ -54,7 +55,7 @@ class GalleryFragment : Fragment() {
     private fun handleClicks() {
         binding.toolbar.tvOk.setOnClickListener {
             val returnIntent = Intent()
-            returnIntent.putExtra("selectedImages", selectedImagesPath)
+            returnIntent.putExtra(SELECTED_IMAGES_PATH, selectedImagesPath)
             activity?.setResult(Activity.RESULT_OK, returnIntent)
             activity?.finish()
         }

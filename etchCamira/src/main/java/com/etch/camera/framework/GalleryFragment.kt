@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.etch.camera.ImageViewModel
 import com.etch.camera.adapter.MainImagesAdapter
 import com.etch.camera.databinding.FragmentGallaryBinding
+import com.etch.camera.util.addFragmentWithBack
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,6 +23,8 @@ class GalleryFragment : Fragment() {
     lateinit var mainImagesAdapter: MainImagesAdapter
 
     private val viewModel by viewModels<ImageViewModel>()
+
+    private var selectedImagePath: String? = null
 
     private var _binding: FragmentGallaryBinding? = null
     private val binding get() = _binding!!
@@ -41,21 +44,34 @@ class GalleryFragment : Fragment() {
 
 
         initRecycler()
+        handleClicks()
         imagesObserver()
+    }
+
+    private fun handleClicks() {
+        binding.toolbar.tvOk.setOnClickListener {
+            val returnIntent = Intent()
+            returnIntent.putExtra("selectedImage", selectedImagePath)
+            activity?.setResult(Activity.RESULT_OK, returnIntent)
+            activity?.finish()
+        }
+
+        binding.toolbar.ivBack.setOnClickListener {
+            activity?.finish()
+        }
+
     }
 
     private fun initRecycler() {
         binding.ivImages.adapter = mainImagesAdapter
 
         mainImagesAdapter.onImageClick = {
-
+            binding.toolbar.tvOk.visibility = View.VISIBLE
+            selectedImagePath = it
         }
 
         mainImagesAdapter.onCameraClick = {
-            val returnIntent = Intent()
-            returnIntent.putExtra("result", 0)
-            activity?.setResult(Activity.RESULT_OK, returnIntent)
-            activity?.finish()
+            (activity as Cameriza).addFragmentWithBack(CameraizaFragment(), null, "")
         }
 
     }

@@ -20,8 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        Log.i("sddsdsd", "onActivityResult: " + requestCode)
-
+        val stringExtra = data?.getStringExtra("selectedImage")
     }
 
 }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="120dp">
+
+
+
 
     <ImageView
         android:id="@+id/iv"
@@ -12,5 +15,19 @@
         android:layout_marginEnd="1dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop" />
+
+    <RelativeLayout
+        android:id="@+id/checkContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_transparent">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/check" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

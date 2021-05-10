@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -33,56 +33,32 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-  buildFeatures {
-    viewBinding true
-  }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
     implementation 'com.google.guava:guava:30.1-jre'
 
-
     // App dependencies
-  def androidXVersion = '1.0.0'
-  def androidXTestCoreVersion = '1.2.0'
-  def androidXTestExtKotlinRunnerVersion = '1.1.1'
-  def androidXTestRulesVersion = '1.2.0'
-  def androidXAnnotations = '1.1.0'
-  def androidXLegacySupport = '1.0.0'
-  def appCompatVersion = '1.1.0'
-  def archLifecycleVersion = '2.2.0'
-  def archTestingVersion = '2.1.0'
-  def cardVersion = '1.0.0'
-  def coroutinesVersion = '1.2.1'
-  def dexMakerVersion = '2.12.1'
-  def espressoVersion = '3.2.0'
-  def fragmentVersion = '1.2.5'
-  def fragmentKtxVersion = '1.2.0'
-  def hamcrestVersion = '1.3'
-  def hiltAndroidXVersion = '1.0.0-alpha01'
-  def junitVersion = '4.13'
-  def materialVersion = '1.3.0-alpha01'
-  def mockitoVersion = '3.3.1'
-  def multiDexVersion = '2.0.1'
-  def recyclerViewVersion = '1.1.0'
-  def robolectricVersion = '4.3.1'
-  def roomVersion = '2.2.5'
-  def rulesVersion = '1.0.1'
-  def timberVersion = '4.7.1'
-  def truthVersion = '1.0'
-  def version_moshi = "1.8.0"
-
-    def    version_retrofit_coroutines_adapter = "0.9.2"
+    def androidXAnnotations = '1.2.0'
+    def androidXLegacySupport = '1.0.0'
+    def appCompatVersion = '1.1.0'
+    def archLifecycleVersion = '2.2.0'
+    def cardVersion = '1.0.0'
+    def coroutinesVersion = '1.4.2'
+    def dexMakerVersion = '2.12.1'
+    def espressoVersion = '3.3.0'
+    def fragmentKtxVersion = '1.3.3'
+    def hiltAndroidXVersion = '1.0.0-alpha01'
+    def junitVersion = '4.13.2'
+    def materialVersion = '1.4.0-beta01'
+    def mockitoVersion = '3.3.1'
+    def recyclerViewVersion = '1.2.0'
+    def timberVersion = '4.7.1'
     def version_kotlin_coroutines = "1.3.7"
-
-    implementation('com.github.ihsanbal:LoggingInterceptor:3.0.0') {
-        exclude group: 'org.json', module: 'json'
-    }
-
-    implementation('io.socket:socket.io-client:1.0.0') {
-        // excluding org.json which is provided by Android
-        exclude group: 'org.json', module: 'json'
-    }
+    def version_retrofit_coroutines_adapter = "0.9.2"
 
 
     // App dependencies
@@ -91,7 +67,7 @@ dependencies {
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
     implementation "androidx.annotation:annotation:$androidXAnnotations"
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     implementation "com.jakewharton.timber:timber:$timberVersion"
     implementation "androidx.legacy:legacy-support-v4:$androidXLegacySupport"
@@ -109,49 +85,12 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
 
-    // Hilt testing
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$hiltVersion"
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
-    kaptAndroidTest "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
-
-    // Dependencies for local unit tests
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "org.mockito:mockito-core:$mockitoVersion"
-    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
-    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
-    testImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
-    testImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
-    testImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
-    testImplementation "com.google.truth:truth:$truthVersion"
 
     // Dependencies for Android unit tests
     androidTestImplementation "junit:junit:$junitVersion"
     androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$dexMakerVersion"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
-
-    // AndroidX Test - JVM testing
-    testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
-    testImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
-    testImplementation "androidx.test:rules:$androidXTestRulesVersion"
-    // Once https://issuetracker.google.com/127986458 is fixed this can be testImplementation
-    debugImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
-    implementation "androidx.test:core:$androidXTestCoreVersion"
-    implementation "androidx.fragment:fragment:$fragmentVersion"
-
-    // AndroidX Test - Instrumented testing
-    androidTestImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
-    androidTestImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
-    androidTestImplementation "androidx.test:rules:$androidXTestRulesVersion"
-    androidTestImplementation "androidx.arch.core:core-testing:$archTestingVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
-    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$espressoVersion"
-    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
 
     // Resolve conflicts between main and test APK:
     androidTestImplementation "androidx.annotation:annotation:$androidXAnnotations"
@@ -165,7 +104,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
 
     // -- Retrofit2
-    def retrofit2_version = "2.8.1"
+    def retrofit2_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
@@ -176,39 +115,18 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
 
-    // RxJava
-    def rxjava_version = '2.1.1'
-    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxjava_version"
-
-
-    // Rx-Retrofit Call Adapter
-    def rxcalladapter_version = '2.5.0'
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$rxcalladapter_version"
-
-
-    // Reactive Streams (convert Observable to LiveData)
-    def reactivestreams_version = "1.1.1"
-    implementation "android.arch.lifecycle:reactivestreams:$reactivestreams_version"
-
-
-    // Leak Canary
-//    def leak_canary_version = "2.0-alpha-3"
-//    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
-
 
     // language
     implementation "com.github.YarikSOffice:lingver:1.2.0"
 
 
     //glide
-    def glide_version = "4.11.0"
+    def glide_version = "4.12.0"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'com.makeramen:roundedimageview:2.3.0'
 
     //coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_kotlin_coroutines"
@@ -216,18 +134,17 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
 
 
-    implementation 'com.gauravk.audiovisualizer:audiovisualizer:0.9.2'
 
 
     // CameraX core library using the camera2 implementation
-    def camerax_version = "1.0.0-rc01"
+    def camerax_version = "1.1.0-alpha04"
     // The following line is optional, as the core library is included indirectly by camera-camera2
     implementation "androidx.camera:camera-core:${camerax_version}"
     implementation "androidx.camera:camera-camera2:${camerax_version}"
     // If you want to additionally use the CameraX Lifecycle library
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
     // If you want to additionally use the CameraX View class
-    implementation "androidx.camera:camera-view:1.0.0-alpha20"
+    implementation "androidx.camera:camera-view:1.0.0-alpha24"
     // If you want to additionally use the CameraX Extensions library
-    implementation "androidx.camera:camera-extensions:1.0.0-alpha20"
+    implementation "androidx.camera:camera-extensions:1.0.0-alpha24"
 }

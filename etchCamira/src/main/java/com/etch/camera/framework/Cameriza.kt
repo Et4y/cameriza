@@ -2,15 +2,15 @@ package com.etch.camera.framework
 
 import android.content.Context
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.os.Environment
 import android.view.WindowInsets
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import dagger.hilt.android.AndroidEntryPoint
 import com.etch.camera.R
 import com.etch.camera.util.initFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
 
@@ -53,14 +53,34 @@ class Cameriza : AppCompatActivity() {
     companion object {
 
         /** Use external media if it is available, our app's file directory otherwise */
+        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         fun getOutputDirectory(context: Context): File {
+
             val appContext = context.applicationContext
+//            var dir: File? = null
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//                dir = context.getExternalFilesDir(appContext.resources.getString(R.string.app_name))
+//            } else {
+//                dir = Environment.getExternalStoragePublicDirectory(appContext.resources.getString(R.string.app_name))
+//            }
+//
+//            if (!dir!!.exists()) {
+//                dir.mkdirs()
+//            }
+//
+//            return dir
+
             val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
-                File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() }
+                File(it, appContext.resources.getString(R.string.app_name)).apply {
+                    mkdirs()
+                }
             }
+
             return if (mediaDir != null && mediaDir.exists())
                 mediaDir else appContext.filesDir
         }
+
+
     }
 
 }

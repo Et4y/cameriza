@@ -22,6 +22,7 @@ import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import com.etch.*
 import com.etch.camera.adapter.ImagesAdapter
@@ -30,7 +31,9 @@ import com.etch.camera.databinding.FragmentCameraBinding
 import com.etch.camera.util.ANIMATION_FAST_MILLIS
 import com.etch.camera.util.ANIMATION_SLOW_MILLIS
 import com.etch.camera.util.simulateClick
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import java.io.File
 import java.nio.ByteBuffer
@@ -57,7 +60,6 @@ class CameraizaFragment : Fragment() {
 
     @Inject
     lateinit var mainImagesAdapter: MainImagesAdapter
-
 
 
     private lateinit var outputDirectory: File
@@ -139,8 +141,6 @@ class CameraizaFragment : Fragment() {
         // Determine the output directory
         outputDirectory = Cameriza.getOutputDirectory(requireContext())
 
-//        sheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.bottomSheet);
-
 
         // Build UI controls
         updateCameraUi()
@@ -208,6 +208,11 @@ class CameraizaFragment : Fragment() {
 //                .apply(RequestOptions.circleCropTransform())
 //                .into(binding.btnPhotoView)
 //        }
+
+        CoroutineScope(Main).launch {
+            Glide.with(requireActivity()).load(uri).into(binding.ivCapturedImage)
+        }
+
     }
 
     /** Initialize CameraX, and prepare to bind the camera use cases  */
@@ -329,7 +334,7 @@ class CameraizaFragment : Fragment() {
     /** Method used to re-draw the camera UI controls, called every time configuration changes. */
     private fun updateCameraUi() {
 
-        getLastImageTakenFromApp()
+//        getLastImageTakenFromApp()
 
         // Listener for button used to capture photo
         binding.btnCameraCapture.setOnClickListener {
@@ -360,6 +365,7 @@ class CameraizaFragment : Fragment() {
 
                         override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                             val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
+
 
                             // We can only change the foreground Drawable using API level 23+ API
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -400,6 +406,8 @@ class CameraizaFragment : Fragment() {
                         )
                     }, ANIMATION_SLOW_MILLIS)
                 }
+
+
             }
         }
 
@@ -554,8 +562,6 @@ class CameraizaFragment : Fragment() {
             image.close()
         }
     }
-
-
 
 
     companion object {

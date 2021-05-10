@@ -16,7 +16,7 @@ class MainImagesAdapter @Inject constructor() :
     var dataList = ArrayList<String>()
     var onImageClick: ((String) -> (Unit))? = null
     var onCameraClick: ((String) -> (Unit))? = null
-
+    var selectedPosition = -1
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -54,8 +54,16 @@ class MainImagesAdapter @Inject constructor() :
                 holder.iv.setGlide(data)
 
                 holder.iv.setOnClickListener {
+                    selectedPosition = position
                     onImageClick?.invoke(data)
+                    notifyDataSetChanged()
                 }
+
+                if (selectedPosition == position)
+                    holder.checkContainer.visibility = View.VISIBLE
+                else
+                    holder.checkContainer.visibility = View.GONE
+
             }
 
             is CameraViewHolder -> {

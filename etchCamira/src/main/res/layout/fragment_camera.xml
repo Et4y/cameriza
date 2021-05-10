@@ -5,8 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context=".MainActivity">
+    android:background="#ffffff">
 
     <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
@@ -14,12 +13,12 @@
         android:layout_height="match_parent" />
 
 
-<!--    <include-->
-<!--        android:id="@+id/bottomSheet"-->
-<!--        layout="@layout/bottom_sheet"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"/>-->
+    <!--    <include-->
+    <!--        android:id="@+id/bottomSheet"-->
+    <!--        layout="@layout/bottom_sheet"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"/>-->
 
 
     <FrameLayout
@@ -46,21 +45,28 @@
             android:layout_marginBottom="30dp"
             android:background="@drawable/ic_shutter" />
 
-        <FrameLayout
-            android:id="@+id/flash"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="top|left"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="47dp"
-            android:background="@drawable/circle"
-            android:padding="11dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="70dp"
+            android:id="@+id/ivCapturedImage"
+            android:layout_height="70dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="40dp"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/white" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_flash_off_black_24dp" />
-        </FrameLayout>
+        <!--        <FrameLayout-->
+        <!--            android:id="@+id/flash"-->
+        <!--            android:layout_width="50dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:background="@drawable/circle"-->
+        <!--            android:padding="11dp">-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:src="@drawable/ic_flash_off_black_24dp" />-->
+        <!--        </FrameLayout>-->
 
         <ImageView
             android:id="@+id/btnCameraSwitch"
@@ -79,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="5dp"
-            android:text="@string/pix_bottom_message_with_video"
+            android:text=""
             android:textColor="#fff"
             android:textSize="12sp" />
 

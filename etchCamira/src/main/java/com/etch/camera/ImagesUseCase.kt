@@ -21,10 +21,10 @@ class ImagesUseCase @Inject constructor(val context: Context) {
 
         cursor = context.contentResolver.query(uri, projection, null, null, null)
 
-        val column_index_data: Int = cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+        val columnIndexData: Int = cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
         cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
         while (cursor.moveToNext()) {
-            absolutePathOfImage = cursor.getString(column_index_data)
+            absolutePathOfImage = cursor.getString(columnIndexData)
             listOfAllImages.add(absolutePathOfImage)
         }
         return listOfAllImages

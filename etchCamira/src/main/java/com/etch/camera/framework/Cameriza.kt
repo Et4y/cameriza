@@ -8,6 +8,7 @@ import android.view.WindowInsets
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.etch.camera.CamerizaConst.Companion.IS_SINGLE_SELECTION
 import com.etch.camera.R
 import com.etch.camera.util.initFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,9 +25,7 @@ class Cameriza : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
-
         setContentView(R.layout.activity_camiraiza)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
@@ -36,7 +35,12 @@ class Cameriza : AppCompatActivity() {
             }
 
 
+        receiveData()
         initFragment(PermissionsFragment(), "")
+    }
+
+    private fun receiveData() {
+        isSingleSelection = intent.getBooleanExtra(IS_SINGLE_SELECTION, false)
     }
 
 
@@ -51,6 +55,8 @@ class Cameriza : AppCompatActivity() {
 
 
     companion object {
+
+        var isSingleSelection = false
 
         /** Use external media if it is available, our app's file directory otherwise */
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

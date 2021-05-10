@@ -2,7 +2,8 @@ package com.etch.camera
 
 class ImageModel {
 
-    var type: String = "image"
+    var isSelected: Boolean = false
+    var type: String? = null
     var image: String = ""
 
 }

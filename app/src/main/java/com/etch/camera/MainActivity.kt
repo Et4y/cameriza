@@ -13,14 +13,18 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        startActivityForResult(Intent(this, Cameriza::class.java), 5)
+        val intent = Intent(this , Cameriza::class.java)
+        intent.putExtra(CamerizaConst.IS_SINGLE_SELECTION , false)
 
+        startActivityForResult(Intent(intent), 5)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        val stringExtra = data?.getStringExtra("selectedImage")
+        val stringExtra = data?.getStringArrayListExtra("selectedImages")
+
+        Log.i("ssddsds", "onActivityResult: " + stringExtra?.size)
     }
 
 }

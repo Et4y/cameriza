@@ -3,6 +3,7 @@ package com.etch.camera.adapter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.etch.camera.ImageModel
 import com.etch.camera.R
 import com.etch.camera.util.inflate
 import com.etch.camera.util.setGlide
@@ -13,11 +14,12 @@ class MainImagesAdapter @Inject constructor() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    var dataList = ArrayList<String>()
-    var onImageClick: ((String) -> (Unit))? = null
+    var dataList = ArrayList<ImageModel>()
+    var onImageClick: ((ArrayList<ImageModel>) -> (Unit))? = null
     var onCameraClick: ((String) -> (Unit))? = null
-    var selectedPosition = -1
-
+    var selectedImages = ArrayList<ImageModel>()
+    var lastSelectedPosition = 0
+    var isSingleSelection = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflatedView: View
@@ -40,7 +42,7 @@ class MainImagesAdapter @Inject constructor() :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (dataList[position] == "")
+        return if (dataList[position].type == "")
             0
         else
             1
@@ -51,15 +53,40 @@ class MainImagesAdapter @Inject constructor() :
 
         when (holder) {
             is GalleryViewHolder -> {
-                holder.iv.setGlide(data)
+                holder.iv.setGlide(data.image)
 
                 holder.iv.setOnClickListener {
-                    selectedPosition = position
-                    onImageClick?.invoke(data)
-                    notifyDataSetChanged()
+
+                    if (isSingleSelection) {
+                        dataList[lastSelectedPosition].isSelected = false
+
+                        selectedImages.clear()
+                        selectedImages.add(data)
+                        data.isSelected = !data.isSelected
+
+                        onImageClick?.invoke(selectedImages)
+                        notifyDataSetChanged()
+
+                        lastSelectedPosition = position
+
+                    } else {
+                        if (data.isSelected) {
+                            selectedImages.remove(data)
+                            data.isSelected = !data.isSelected
+                        } else {
+                            data.isSelected = !data.isSelected
+                            selectedImages.add(data)
+                        }
+
+                        onImageClick?.invoke(selectedImages)
+                        notifyDataSetChanged()
+
+                    }
+
+
                 }
 
-                if (selectedPosition == position)
+                if (data.isSelected)
                     holder.checkContainer.visibility = View.VISIBLE
                 else
                     holder.checkContainer.visibility = View.GONE
@@ -72,6 +99,7 @@ class MainImagesAdapter @Inject constructor() :
                 }
             }
         }
+
     }
 
 

@@ -3,14 +3,17 @@ package com.etch.camera.framework
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.etch.camera.ImageModel
 import com.etch.camera.ImageViewModel
 import com.etch.camera.adapter.MainImagesAdapter
 import com.etch.camera.databinding.FragmentGallaryBinding
+import com.etch.camera.framework.Cameriza.Companion.isSingleSelection
 import com.etch.camera.util.addFragmentWithBack
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,7 +27,7 @@ class GalleryFragment : Fragment() {
 
     private val viewModel by viewModels<ImageViewModel>()
 
-    private var selectedImagePath: String? = null
+    private var selectedImagesPath = ArrayList<String>()
 
     private var _binding: FragmentGallaryBinding? = null
     private val binding get() = _binding!!
@@ -51,7 +54,7 @@ class GalleryFragment : Fragment() {
     private fun handleClicks() {
         binding.toolbar.tvOk.setOnClickListener {
             val returnIntent = Intent()
-            returnIntent.putExtra("selectedImage", selectedImagePath)
+            returnIntent.putExtra("selectedImages", selectedImagesPath)
             activity?.setResult(Activity.RESULT_OK, returnIntent)
             activity?.finish()
         }
@@ -64,10 +67,21 @@ class GalleryFragment : Fragment() {
 
     private fun initRecycler() {
         binding.ivImages.adapter = mainImagesAdapter
+        mainImagesAdapter.isSingleSelection = isSingleSelection
 
         mainImagesAdapter.onImageClick = {
-            binding.toolbar.tvOk.visibility = View.VISIBLE
-            selectedImagePath = it
+
+            selectedImagesPath.clear()
+
+            for (i in it) {
+                selectedImagesPath.add(i.image)
+            }
+
+            if (it.size > 0)
+                binding.toolbar.tvOk.visibility = View.VISIBLE
+            else
+                binding.toolbar.tvOk.visibility = View.GONE
+
         }
 
         mainImagesAdapter.onCameraClick = {
@@ -83,10 +97,16 @@ class GalleryFragment : Fragment() {
     private fun imagesObserver() {
         viewModel.imagesLiveDataObserver().observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
+
+                val imageModel = ImageModel()
+                imageModel.image = ""
+                imageModel.type = ""
+
                 mainImagesAdapter.dataList.clear()
-                mainImagesAdapter.dataList.add("")
-                mainImagesAdapter.dataList.addAll(it.reversed() as ArrayList<String>)
+                mainImagesAdapter.dataList.add(imageModel)
+                mainImagesAdapter.dataList.addAll(it.reversed() as ArrayList<ImageModel>)
                 mainImagesAdapter.notifyDataSetChanged()
+
             }
         })
     }

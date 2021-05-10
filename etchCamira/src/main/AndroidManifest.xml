@@ -3,13 +3,20 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.etch.camera">
+
+
     <!-- Enable instant app support -->
-    <!-- <dist:module dist:instant="true" /> -->
+    <!--    <dist:module dist:instant="true" />-->
+
     <!-- Declare features -->
-    <uses-feature android:name="android.hardware.camera" /> <!-- Declare permissions -->
+    <uses-feature android:name="android.hardware.camera" />
+
+    <!-- Declare permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
 
+
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,7 +25,7 @@
         android:theme="@style/Theme.Camera">
 
 
-        <activity android:name="com.etch.camera.MainActivity">
+        <activity android:name="com.etch.camera.framework.Cameriza">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,10 +40,16 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity> <!-- Declare notch support -->
+
+        </activity>
+
+
+        <!-- Declare notch support -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" /> <!-- FileProvider used to share photos with other apps -->
+            android:value="true" />
+
+        <!-- FileProvider used to share photos with other apps -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -46,6 +59,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+
     </application>
 
 </manifest>

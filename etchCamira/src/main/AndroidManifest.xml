@@ -18,43 +18,12 @@
     <application
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
-        android:theme="@style/Theme.Camera">
+        android:theme="@style/AppTheme">
 
 
-        <activity android:name="com.etch.camera.framework.Cameriza">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <!-- Register as a system camera app -->
-            <intent-filter>
-                <action android:name="android.media.action.IMAGE_CAPTURE" />
-                <action android:name="android.media.action.STILL_IMAGE_CAMERA" />
-                <action android:name="android.media.action.VIDEO_CAMERA" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-        </activity>
-
-
-        <!-- Declare notch support -->
-        <meta-data
-            android:name="android.notch_support"
-            android:value="true" />
-
-        <!-- FileProvider used to share photos with other apps -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+        <activity android:name="com.etch.camera.framework.Cameriza"
+            android:noHistory="true"
+            android:screenOrientation="portrait"></activity>
 
 
     </application>

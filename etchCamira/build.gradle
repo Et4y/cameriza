@@ -38,8 +38,14 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+    mavenCentral()
+    jcenter()
+}
+
+
 dependencies {
-    implementation 'com.google.guava:guava:30.1-jre'
 
     // App dependencies
     def androidXAnnotations = '1.2.0'

@@ -1,1 +1,3 @@
+include ':etchCamira'
 include ':app'
+rootProject.name = "Camera"

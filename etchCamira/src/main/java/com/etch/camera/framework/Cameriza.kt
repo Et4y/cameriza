@@ -1,18 +1,21 @@
 package com.etch.camera.framework
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.view.WindowInsets
+import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.etch.camera.CamerizaConst.Companion.IS_SINGLE_SELECTION
 import com.etch.camera.R
 import com.etch.camera.util.initFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 const val KEY_EVENT_ACTION = "key_event_action"
@@ -25,15 +28,7 @@ class Cameriza : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
         setContentView(R.layout.activity_camiraiza)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
-            window.insetsController?.let {
-                window.setDecorFitsSystemWindows(false)
-                it.hide(WindowInsets.Type.statusBars())
-            }
-
 
         receiveData()
         initFragment(PermissionsFragment(), "")
@@ -58,35 +53,56 @@ class Cameriza : AppCompatActivity() {
 
         var isSingleSelection = false
 
-        /** Use external media if it is available, our app's file directory otherwise */
-        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+        lateinit var currentPhotoPath: String
+
         fun getOutputDirectory(context: Context): File {
-
-            val appContext = context.applicationContext
-//            var dir: File? = null
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//                dir = context.getExternalFilesDir(appContext.resources.getString(R.string.app_name))
-//            } else {
-//                dir = Environment.getExternalStoragePublicDirectory(appContext.resources.getString(R.string.app_name))
-//            }
-//
-//            if (!dir!!.exists()) {
-//                dir.mkdirs()
-//            }
-//
-//            return dir
-
-            val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
-                File(it, appContext.resources.getString(R.string.app_name)).apply {
-                    mkdirs()
-                }
+            // Create an image file name
+            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            return File.createTempFile(
+                "JPEG_${timeStamp}_", /* prefix */
+                ".jpg", /* suffix */
+                storageDir /* directory */
+            ).apply {
+                // Save a file: path for use with ACTION_VIEW intents
+                currentPhotoPath = absolutePath
             }
-
-            return if (mediaDir != null && mediaDir.exists())
-                mediaDir else appContext.filesDir
         }
 
 
+        /** Use external media if it is available, our app's file directory otherwise */
+//        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+//        fun getOutputDirectory(context: Context): File {
+//
+//            val appContext = context.applicationContext
+////            var dir: File? = null
+////            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+////                dir = context.getExternalFilesDir(appContext.resources.getString(R.string.app_name))
+////            } else {
+////                dir = Environment.getExternalStoragePublicDirectory(appContext.resources.getString(R.string.app_name))
+////            }
+////
+////            if (!dir!!.exists()) {
+////                dir.mkdirs()
+////            }
+////
+////            return dir
+//
+//            val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
+//                File(it, appContext.resources.getString(R.string.app_name)).apply {
+//                    mkdirs()
+//                }
+//            }
+//
+//            return if (mediaDir != null && mediaDir.exists())
+//                mediaDir else appContext.filesDir
+//        }
+
+
     }
+
+
+
+
 
 }

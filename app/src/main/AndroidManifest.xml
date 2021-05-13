@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.etch.camera">
+    package="com.etch">
     <!-- Enable instant app support -->
     <!-- <dist:module dist:instant="true" /> -->
     <!-- Declare features -->
@@ -10,13 +10,14 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.etch.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

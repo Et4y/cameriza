@@ -1,4 +1,4 @@
-package com.etch.camera
+package com.etch
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

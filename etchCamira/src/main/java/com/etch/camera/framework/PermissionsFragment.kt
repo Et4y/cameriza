@@ -11,7 +11,7 @@ import com.etch.camera.util.addFragmentWithoutBack
 
 private const val PERMISSIONS_REQUEST_CODE = 10
 private val PERMISSIONS_REQUIRED =
-    arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
+    arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 /**
  * The sole purpose of this fragment is to request permissions and, once granted, display the

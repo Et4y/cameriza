@@ -27,14 +27,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <ImageView
-            android:id="@+id/clickmebg"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center|bottom"
-            android:layout_marginBottom="40dp"
-            android:background="@drawable/red_circle"
-            android:visibility="gone" />
+<!--        <ImageView-->
+<!--            android:id="@+id/clickmebg"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_gravity="center|bottom"-->
+<!--            android:layout_marginBottom="40dp"-->
+<!--            android:background="@drawable/red_circle"-->
+<!--            android:visibility="gone" />-->
 
         <ImageButton
             android:id="@+id/btnCameraCapture"
@@ -53,7 +53,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="40dp"
             app:civ_border_width="1dp"
-            app:civ_border_color="@color/white" />
+            app:civ_border_color="@color/camerizaWhite" />
 
         <!--        <FrameLayout-->
         <!--            android:id="@+id/flash"-->
@@ -75,7 +75,6 @@
             android:layout_gravity="top|end"
             android:layout_marginTop="47dp"
             android:layout_marginEnd="50dp"
-            android:background="@drawable/circle"
             android:padding="11dp"
             android:src="@drawable/ic_photo_camera" />
 

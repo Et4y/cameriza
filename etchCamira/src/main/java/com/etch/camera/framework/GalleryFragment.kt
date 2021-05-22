@@ -49,6 +49,8 @@ class GalleryFragment : Fragment() {
 
         initRecycler()
         handleClicks()
+        handleOnImageClick()
+        handleOnCameraClicked()
         imagesObserver()
     }
 
@@ -64,12 +66,21 @@ class GalleryFragment : Fragment() {
             activity?.finish()
         }
 
+        binding.btnEdit.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("uri", selectedImagesPath[0])
+
+            (activity as Cameriza).addFragmentWithBack(EditImageFragment(), bundle, "sdsd")
+        }
+
     }
 
     private fun initRecycler() {
         binding.ivImages.adapter = mainImagesAdapter
         mainImagesAdapter.isSingleSelection = isSingleSelection
+    }
 
+    private fun handleOnImageClick() {
         mainImagesAdapter.onImageClick = {
 
             selectedImagesPath.clear()
@@ -84,12 +95,14 @@ class GalleryFragment : Fragment() {
                 binding.toolbar.tvOk.visibility = View.GONE
 
         }
+    }
 
+    private fun handleOnCameraClicked() {
         mainImagesAdapter.onCameraClick = {
             (activity as Cameriza).addFragmentWithBack(CameraizaFragment(), null, "")
         }
-
     }
+
 
     fun getAllImages() {
         viewModel.getAllImages()

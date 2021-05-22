@@ -63,8 +63,8 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
 
-//    implementation project(':etchCamira')
+    implementation project(':etchCamira')
 
-    implementation 'com.github.Et4y:cameriza:1.5.4'
+//    implementation 'com.github.Et4y:cameriza:1.5.4'
 
 }

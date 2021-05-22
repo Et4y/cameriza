@@ -15,22 +15,25 @@ class MainImagesAdapter @Inject constructor() :
 
 
     var dataList = ArrayList<ImageModel>()
+    var selectedImages = ArrayList<ImageModel>()
+
     var onImageClick: ((ArrayList<ImageModel>) -> (Unit))? = null
     var onCameraClick: ((String) -> (Unit))? = null
-    var selectedImages = ArrayList<ImageModel>()
+
     var lastSelectedPosition = 0
     var isSingleSelection = false
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflatedView: View
 
         return when (viewType) {
             0 -> {
-                inflatedView = parent.inflate(R.layout.item_camera, false)
+                inflatedView = parent.inflate(R.layout.item_cameriza_camera, false)
                 CameraViewHolder(inflatedView)
             }
             else -> {
-                inflatedView = parent.inflate(R.layout.item_main_images, false)
+                inflatedView = parent.inflate(R.layout.item_cameriza_main_images, false)
                 GalleryViewHolder(inflatedView)
             }
         }
@@ -52,7 +55,9 @@ class MainImagesAdapter @Inject constructor() :
         val data = dataList.get(position)
 
         when (holder) {
+
             is GalleryViewHolder -> {
+
                 holder.iv.setGlide(data.image)
 
                 holder.iv.setOnClickListener {
@@ -93,11 +98,14 @@ class MainImagesAdapter @Inject constructor() :
 
             }
 
+
             is CameraViewHolder -> {
                 holder.iv.setOnClickListener {
                     onCameraClick?.invoke("")
                 }
             }
+
+
         }
 
     }

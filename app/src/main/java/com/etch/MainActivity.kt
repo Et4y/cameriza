@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
 
         val stringArrayListExtra = data?.getStringArrayListExtra(CamerizaConst.SELECTED_IMAGES_PATH)
 
-        Log.i("sddsdsd", "onActivityResult: "  + stringArrayListExtra?.size)
 
     }
 

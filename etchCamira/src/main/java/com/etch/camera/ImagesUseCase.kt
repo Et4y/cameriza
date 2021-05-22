@@ -28,6 +28,7 @@ class ImagesUseCase @Inject constructor(val context: Context) {
 
             val imageModel = ImageModel()
             imageModel.image = absolutePathOfImage
+            imageModel.uri = uri
 
             listOfAllImages.add(imageModel)
         }

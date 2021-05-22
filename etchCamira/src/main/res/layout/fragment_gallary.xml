@@ -43,7 +43,6 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/bg_green_round_corners"
-        android:text="ksndksndksndksndksndk"
         android:textColor="@color/camerizaBlack"
         android:visibility="gone" />
 

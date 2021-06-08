@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
 import android.webkit.MimeTypeMap
 import androidx.camera.core.*
@@ -339,8 +340,10 @@ class CameraizaFragment : Fragment() {
         // Listener for button used to capture photo
         binding.btnCameraCapture.setOnClickListener {
 
+
             // Get a stable reference of the modifiable image capture use case
             imageCapture?.let { imageCapture ->
+
 
                 // Create output file to hold the image
                 val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
@@ -361,11 +364,12 @@ class CameraizaFragment : Fragment() {
                 imageCapture.takePicture(
                     outputOptions, cameraExecutor, object : ImageCapture.OnImageSavedCallback {
                         override fun onError(exc: ImageCaptureException) {
+                            Log.i("lsdlsmdm", "onImageSaved: error" + exc.toString())
                         }
 
                         override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                             val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
-
+                            Log.i("lsdlsmdm", "onImageSaved: saved")
 
                             // We can only change the foreground Drawable using API level 23+ API
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -391,6 +395,7 @@ class CameraizaFragment : Fragment() {
                                 arrayOf(savedUri.toFile().absolutePath),
                                 arrayOf(mimeType)
                             ) { _, uri ->
+
                             }
                         }
                     })

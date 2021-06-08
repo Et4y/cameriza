@@ -55,19 +55,28 @@ class Cameriza : AppCompatActivity() {
 
         lateinit var currentPhotoPath: String
 
+//        fun getOutputDirectory(context: Context): File {
+//            // Create an image file name
+//            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+//            val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+//            return File.createTempFile(
+//                "JPEG_${timeStamp}_", /* prefix */
+//                ".jpg", /* suffix */
+//                storageDir /* directory */
+//            ).apply {
+//                // Save a file: path for use with ACTION_VIEW intents
+//                currentPhotoPath = absolutePath
+//            }
+//        }
+
         fun getOutputDirectory(context: Context): File {
-            // Create an image file name
-            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-            val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            return File.createTempFile(
-                "JPEG_${timeStamp}_", /* prefix */
-                ".jpg", /* suffix */
-                storageDir /* directory */
-            ).apply {
-                // Save a file: path for use with ACTION_VIEW intents
-                currentPhotoPath = absolutePath
-            }
+            val appContext = context.applicationContext
+            val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
+                File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() } }
+            return if (mediaDir != null && mediaDir.exists())
+                mediaDir else appContext.filesDir
         }
+
 
     }
 

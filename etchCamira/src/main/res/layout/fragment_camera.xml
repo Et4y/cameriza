@@ -43,7 +43,7 @@
             android:layout_gravity="center|bottom"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/ic_shutter" />
+            android:background="@drawable/cameriza_ic_shutter" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="70dp"
@@ -76,7 +76,7 @@
             android:layout_marginTop="47dp"
             android:layout_marginEnd="50dp"
             android:padding="11dp"
-            android:src="@drawable/ic_photo_camera" />
+            android:src="@drawable/cameriza_ic_photo_camera" />
 
         <TextView
             android:id="@+id/message_bottom"

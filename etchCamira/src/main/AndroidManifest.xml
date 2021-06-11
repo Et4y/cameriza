@@ -20,8 +20,7 @@
     <application
         android:name=".BaseApplication"
         android:largeHeap="true"
-        android:requestLegacyExternalStorage="true"
-        android:theme="@style/AppTheme">
+        android:requestLegacyExternalStorage="true">
 
 
         <activity

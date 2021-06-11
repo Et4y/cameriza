@@ -13,6 +13,7 @@ import com.etch.camera.framework.Cameriza
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.CamerizaAppTheme)
         super.onCreate(savedInstanceState)
         setContentView(com.etch.R.layout.activity_main2)
 

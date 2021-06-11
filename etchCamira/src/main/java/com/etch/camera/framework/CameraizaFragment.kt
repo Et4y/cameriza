@@ -1,32 +1,28 @@
 package com.etch.camera.framework
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.content.res.Configuration
-import android.graphics.Color
+import android.graphics.*
+import android.graphics.BitmapFactory.*
 import android.graphics.drawable.ColorDrawable
 import android.hardware.display.DisplayManager
-import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.*
-import android.webkit.MimeTypeMap
 import androidx.camera.core.*
+import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import com.etch.*
-import com.etch.camera.adapter.ImagesAdapter
 import com.etch.camera.adapter.MainImagesAdapter
 import com.etch.camera.databinding.FragmentCameraBinding
 import com.etch.camera.util.ANIMATION_FAST_MILLIS
@@ -55,9 +51,6 @@ typealias LumaListener = (luma: Double) -> Unit
 @AndroidEntryPoint
 class CameraizaFragment : Fragment() {
 
-
-    @Inject
-    lateinit var imagesAdapter: ImagesAdapter
 
     @Inject
     lateinit var mainImagesAdapter: MainImagesAdapter
@@ -344,37 +337,48 @@ class CameraizaFragment : Fragment() {
             // Get a stable reference of the modifiable image capture use case
             imageCapture?.let { imageCapture ->
 
+                val contentResolver = requireActivity().contentResolver
 
-                // Create output file to hold the image
-                val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
+                val contentValues =
+                    ContentValues().apply {
+                        put(MediaStore.MediaColumns.DISPLAY_NAME, "anImage" + ".jpg")
+                        put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            put(
+                                MediaStore.MediaColumns.RELATIVE_PATH,
+                                Environment.DIRECTORY_PICTURES + File.separator + "Cameriza"
+                            )
+                        }
+                    }
 
-                // Setup image capture metadata
-                val metadata = ImageCapture.Metadata().apply {
-
-                    // Mirror image when using the front camera
-                    isReversedHorizontal = lensFacing == CameraSelector.LENS_FACING_FRONT
-                }
-
-                // Create output options object which contains file + metadata
-                val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile)
-                    .setMetadata(metadata)
-                    .build()
-
+                // Create the output file option to store the captured image in MediaStore
+                val outputOptions =
+                    ImageCapture
+                        .OutputFileOptions
+                        .Builder(
+                            contentResolver,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            contentValues
+                        )
+                        .build()
+//
                 // Setup image capture listener which is triggered after photo has been taken
                 imageCapture.takePicture(
-                    outputOptions, cameraExecutor, object : ImageCapture.OnImageSavedCallback {
+                    outputOptions,
+                    cameraExecutor,
+                    object : ImageCapture.OnImageSavedCallback {
+
                         override fun onError(exc: ImageCaptureException) {
-                            Log.i("lsdlsmdm", "onImageSaved: error" + exc.toString())
                         }
 
                         override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                            val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
-                            Log.i("lsdlsmdm", "onImageSaved: saved")
+
+                            val savedUri = output.savedUri
 
                             // We can only change the foreground Drawable using API level 23+ API
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 // Update the gallery thumbnail with latest picture taken
-                                setGalleryThumbnail(savedUri)
+                                setGalleryThumbnail(savedUri!!)
                             }
 
                             // Implicit broadcasts will be ignored for devices running API level >= 24
@@ -388,15 +392,15 @@ class CameraizaFragment : Fragment() {
                             // If the folder selected is an external media directory, this is
                             // unnecessary but otherwise other apps will not be able to access our
                             // images unless we scan them using [MediaScannerConnection]
-                            val mimeType = MimeTypeMap.getSingleton()
-                                .getMimeTypeFromExtension(savedUri.toFile().extension)
-                            MediaScannerConnection.scanFile(
-                                context,
-                                arrayOf(savedUri.toFile().absolutePath),
-                                arrayOf(mimeType)
-                            ) { _, uri ->
-
-                            }
+//                            val mimeType = MimeTypeMap.getSingleton()
+//                                .getMimeTypeFromExtension(savedUri?.toFile()?.extension)
+//                            MediaScannerConnection.scanFile(
+//                                context,
+//                                arrayOf(savedUri?.toFile()?.absolutePath),
+//                                arrayOf(mimeType)
+//                            ) { _, uri ->
+//
+//                            }
                         }
                     })
 
@@ -446,6 +450,7 @@ class CameraizaFragment : Fragment() {
 //        }
     }
 
+
     /** Enabled or disabled a button to switch cameras depending on the available cameras */
     private fun updateCameraSwitchButton() {
         try {
@@ -486,7 +491,8 @@ class CameraizaFragment : Fragment() {
      * <p>All we need to do is override the function `analyze` with our desired operations. Here,
      * we compute the average luminosity of the image by looking at the Y plane of the YUV frame.
      */
-    private class LuminosityAnalyzer(listener: LumaListener? = null) : ImageAnalysis.Analyzer {
+    private inner class LuminosityAnalyzer(listener: LumaListener? = null) :
+        ImageAnalysis.Analyzer {
 
         private val frameRateWindow = 8
         private val frameTimestamps = ArrayDeque<Long>(5)

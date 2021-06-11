@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Camera</string>
+    <string name="tap_photo_to_select">اضغط على الصورة للتحديد</string>
+    <string name="ok">حسنا</string>
+    <string name="recent">الأخيرة</string>
+</resources>

@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dist="http://schemas.android.com/apk/distribution"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.etch.camera">
 
-
-    <!-- Enable instant app support -->
-    <!--    <dist:module dist:instant="true" />-->
 
     <!-- Declare features -->
     <uses-feature android:name="android.hardware.camera" />
@@ -14,7 +9,7 @@
     <!-- Declare permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
 
 
     <application
@@ -26,6 +21,7 @@
         <activity
             android:name="com.etch.camera.framework.Cameriza"
             android:noHistory="true"
+            android:theme="@style/CamerizaAppTheme"
             android:screenOrientation="portrait" />
 
 

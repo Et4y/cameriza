@@ -2,7 +2,7 @@ package com.etch.camera
 
 import android.net.Uri
 
-class ImageModel {
+class CamerizaImageModel {
 
     var isSelected: Boolean = false
     var type: String? = null

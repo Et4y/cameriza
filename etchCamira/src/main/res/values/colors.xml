@@ -2,8 +2,8 @@
 <resources>
     <color name="camerizaBlack">#FF000000</color>
     <color name="camerizaTransparent">#00000000</color>
-    <color name="camerizaWhite_transparent">#61FFFFFF</color>
+    <color name="camerizaWhite_transparent">#80FFFFFF</color>
     <color name="camerizaWhite">#FFFFFFFF</color>
     <color name="camerizaGreen">#33691E</color>
-    <color name="camerizaGreenDark">#80075e54</color>
+    <color name="camerizaGreenDark">#295517</color>
 </resources>

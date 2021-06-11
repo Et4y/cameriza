@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import com.etch.camera.R
 import com.etch.camera.framework.Cameriza
 
-fun Cameriza.initFragment(
+internal fun Cameriza.initFragment(
     fragment: Fragment,
     fragmentTag: String?
 ) {
@@ -15,7 +15,7 @@ fun Cameriza.initFragment(
         .commit()
 }
 
-fun Cameriza.addFragmentWithoutBack(
+internal fun Cameriza.addFragmentWithoutBack(
     fragment: Fragment,
     bundle: Bundle?,
     fragmentTag: String?
@@ -28,7 +28,7 @@ fun Cameriza.addFragmentWithoutBack(
         .commit()
 }
 
-fun Cameriza.addFragmentWithBack(
+internal fun Cameriza.addFragmentWithBack(
     fragment: Fragment,
     bundle: Bundle?,
     fragmentTag: String?

@@ -8,5 +8,4 @@ import dagger.hilt.android.HiltAndroidApp
 open class BaseApplication : Application() {
 
 
-
 }

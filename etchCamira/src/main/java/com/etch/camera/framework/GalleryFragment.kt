@@ -3,14 +3,13 @@ package com.etch.camera.framework
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.etch.camera.CamerizaConst.Companion.SELECTED_IMAGES_PATH
-import com.etch.camera.ImageModel
+import com.etch.camera.CamerizaImageModel
 import com.etch.camera.ImageViewModel
 import com.etch.camera.adapter.MainImagesAdapter
 import com.etch.camera.databinding.FragmentGallaryBinding
@@ -21,7 +20,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class GalleryFragment : Fragment() {
+ class GalleryFragment : Fragment() {
 
     @Inject
     lateinit var mainImagesAdapter: MainImagesAdapter
@@ -112,13 +111,13 @@ class GalleryFragment : Fragment() {
         viewModel.imagesLiveDataObserver().observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
 
-                val imageModel = ImageModel()
+                val imageModel = CamerizaImageModel()
                 imageModel.image = ""
                 imageModel.type = ""
 
                 mainImagesAdapter.dataList.clear()
                 mainImagesAdapter.dataList.add(imageModel)
-                mainImagesAdapter.dataList.addAll(it.reversed() as ArrayList<ImageModel>)
+                mainImagesAdapter.dataList.addAll(it.reversed() as ArrayList<CamerizaImageModel>)
                 mainImagesAdapter.notifyDataSetChanged()
 
             }

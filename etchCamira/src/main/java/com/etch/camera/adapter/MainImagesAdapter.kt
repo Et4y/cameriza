@@ -3,7 +3,7 @@ package com.etch.camera.adapter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.etch.camera.ImageModel
+import com.etch.camera.CamerizaImageModel
 import com.etch.camera.R
 import com.etch.camera.util.inflate
 import com.etch.camera.util.setGlide
@@ -14,10 +14,10 @@ class MainImagesAdapter @Inject constructor() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    var dataList = ArrayList<ImageModel>()
-    var selectedImages = ArrayList<ImageModel>()
+    var dataList = ArrayList<CamerizaImageModel>()
+    var selectedImages = ArrayList<CamerizaImageModel>()
 
-    var onImageClick: ((ArrayList<ImageModel>) -> (Unit))? = null
+    var onImageClick: ((ArrayList<CamerizaImageModel>) -> (Unit))? = null
     var onCameraClick: ((String) -> (Unit))? = null
 
     var lastSelectedPosition = 0

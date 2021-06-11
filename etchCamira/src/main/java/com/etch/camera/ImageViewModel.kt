@@ -18,7 +18,7 @@ class ImageViewModel @ViewModelInject constructor(
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
-    private var imagesLiveData: MutableLiveData<List<ImageModel>> = MutableLiveData()
+    private var imagesLiveData: MutableLiveData<List<CamerizaImageModel>> = MutableLiveData()
 
 
     init {

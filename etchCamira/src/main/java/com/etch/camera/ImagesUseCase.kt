@@ -8,10 +8,10 @@ import javax.inject.Inject
 
 class ImagesUseCase @Inject constructor(val context: Context) {
 
-    fun loadImagesFromSDCard(): ArrayList<ImageModel> {
+    fun loadImagesFromSDCard(): ArrayList<CamerizaImageModel> {
         val uri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val cursor: Cursor?
-        val listOfAllImages = ArrayList<ImageModel>()
+        val listOfAllImages = ArrayList<CamerizaImageModel>()
         var absolutePathOfImage: String?
 
         val projection = arrayOf(
@@ -26,7 +26,7 @@ class ImagesUseCase @Inject constructor(val context: Context) {
         while (cursor.moveToNext()) {
             absolutePathOfImage = cursor.getString(columnIndexData)
 
-            val imageModel = ImageModel()
+            val imageModel = CamerizaImageModel()
             imageModel.image = absolutePathOfImage
             imageModel.uri = uri
 

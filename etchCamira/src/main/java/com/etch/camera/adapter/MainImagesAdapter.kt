@@ -3,7 +3,7 @@ package com.etch.camera.adapter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.etch.camera.CamerizaImageModel
+import com.etch.camera.data.CamerizaImageModel
 import com.etch.camera.R
 import com.etch.camera.util.inflate
 import com.etch.camera.util.setGlide

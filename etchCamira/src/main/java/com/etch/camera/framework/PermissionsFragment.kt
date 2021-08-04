@@ -29,6 +29,8 @@ class PermissionsFragment : Fragment() {
             permissions.entries.forEach {
                 if (it.value) {
                     (activity as Cameriza).addFragmentWithoutBack(GalleryFragment(), null, "")
+                } else {
+                    activity?.finish()
                 }
             }
         }

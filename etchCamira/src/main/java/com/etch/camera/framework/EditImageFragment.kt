@@ -1,19 +1,25 @@
 package com.etch.camera.framework
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.etch.camera.R
+import com.etch.camera.adapter.ColorsAdapter
 import com.etch.camera.databinding.FragmentEditImageBinding
-import java.io.File
+import com.etch.camera.util.setGlide
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class EditImageFragment : Fragment() {
+
+    @Inject
+    lateinit var colorsAdapter: ColorsAdapter
+
 
     private var _binding: FragmentEditImageBinding? = null
     private val binding get() = _binding!!
@@ -32,36 +38,22 @@ class EditImageFragment : Fragment() {
 
 
         receiveData()
-
+        initRecyclerColors()
     }
 
     private fun receiveData() {
-        val uri = arguments?.getString("uri")
+        val path = arguments?.getString("uri")
 
-
-        binding.cropView.setUri(Uri.parse(File(uri!!).toString()))
-
-//        val imageUri = binding.cropImageView.imageUri
-
-//        Log.i("sdsdsd", "receiveData: " + imageUri)
-
+        binding.iv.setGlide(path!!)
 
     }
 
-    protected fun CropImage(uri: Uri) {
-        try {
-            val intent = Intent("com.android.camera.action.CROP")
-            intent.setDataAndType(uri, "image/*")
-            intent.putExtra("crop", "true")
-            intent.putExtra("outputX", 200)
-            intent.putExtra("outputY", 200)
-            intent.putExtra("aspectX", 3)
-            intent.putExtra("aspectY", 4)
-            intent.putExtra("scaleUpIfNeeded", true)
-            intent.putExtra("return-data", true)
-            startActivityForResult(intent, 5)
-        } catch (e: ActivityNotFoundException) {
-        }
+    private fun initRecyclerColors(){
+        binding.rvColors.adapter = colorsAdapter
+
+        colorsAdapter.dataList = resources.getIntArray(R.array.colorsList).toCollection(ArrayList())
+        colorsAdapter.notifyDataSetChanged()
     }
+
 
 }

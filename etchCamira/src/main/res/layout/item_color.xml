@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlSelected"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:layout_marginStart="8dp"
+    tools:ignore="ResourceName">
+
+    <com.mikhaellopez.circleview.CircleView
+        android:id="@+id/view"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/camerizaBlack" />
+
+</RelativeLayout>

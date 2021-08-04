@@ -1,21 +1,18 @@
 package com.etch.camera.framework
 
 import android.content.Context
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.view.Window
-import android.view.WindowManager
-import androidx.annotation.RequiresApi
+import android.provider.MediaStore
+import android.util.Log
+import android.webkit.MimeTypeMap
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.etch.camera.CamerizaConst.Companion.IS_SINGLE_SELECTION
 import com.etch.camera.R
+import com.etch.camera.data.FileModel
+import com.etch.camera.util.CamerizaConst.Companion.IS_SINGLE_SELECTION
 import com.etch.camera.util.initFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 const val KEY_EVENT_ACTION = "key_event_action"
@@ -63,6 +60,46 @@ class Cameriza : AppCompatActivity() {
         }
 
 
+    }
+
+
+    private fun getExternalPDFFileList(): ArrayList<FileModel> {
+        val cr = contentResolver
+        val uri = MediaStore.Files.getContentUri("external")
+
+        val projection =
+            arrayOf(
+                MediaStore.Files.FileColumns._ID,
+                MediaStore.Files.FileColumns.DISPLAY_NAME
+            )
+
+        val selection = (
+                MediaStore.Files.FileColumns.MEDIA_TYPE + "="
+                        + MediaStore.Files.FileColumns.MEDIA_TYPE
+                )
+        val selectionArgs: Array<String>? = null
+
+        val selectionMimeType = MediaStore.Files.FileColumns.MIME_TYPE + "=?"
+        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("pdf")
+        val selectionArgsPdf = arrayOf(mimeType)
+        val cursor = cr.query(uri, projection, selectionMimeType, selectionArgsPdf, null)!!
+        val uriList: ArrayList<FileModel> = ArrayList()
+
+        cursor.moveToFirst()
+
+        val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
+        val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)
+
+        while (!cursor.isAfterLast) {
+            val columnIndex = cursor.getColumnIndex(projection[0])
+            val fileId = cursor.getLong(idColumn)
+            val fileUri = Uri.parse("$uri/$fileId")
+            val displayName = cursor.getString(nameColumn)
+            uriList.add(FileModel(displayName, fileUri))
+            cursor.moveToNext()
+        }
+        cursor.close()
+        return uriList
     }
 
 

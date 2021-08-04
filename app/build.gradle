@@ -65,6 +65,7 @@ dependencies {
 
     implementation project(':etchCamira')
 
+
 //    implementation 'com.github.Et4y:cameriza:1.5.4'
 
 }

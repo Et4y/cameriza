@@ -3,8 +3,7 @@ package com.etch
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.etch.camera.CamerizaConst
+import com.etch.camera.util.CamerizaConst
 import com.etch.camera.R
 import com.etch.camera.framework.Cameriza
 

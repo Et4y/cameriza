@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.etch.camera.CamerizaConst.Companion.SELECTED_IMAGES_PATH
-import com.etch.camera.CamerizaImageModel
-import com.etch.camera.ImageViewModel
+import com.etch.camera.util.CamerizaConst.Companion.SELECTED_IMAGES_PATH
+import com.etch.camera.data.CamerizaImageModel
+import com.etch.camera.viewmodel.ImageViewModel
 import com.etch.camera.adapter.MainImagesAdapter
 import com.etch.camera.databinding.FragmentGallaryBinding
 import com.etch.camera.framework.Cameriza.Companion.isSingleSelection
@@ -68,7 +68,6 @@ import javax.inject.Inject
         binding.btnEdit.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("uri", selectedImagesPath[0])
-
             (activity as Cameriza).addFragmentWithBack(EditImageFragment(), bundle, "sdsd")
         }
 

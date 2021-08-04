@@ -1,4 +1,4 @@
-package com.etch.camera
+package com.etch.camera.util
 
 class CamerizaConst {
 

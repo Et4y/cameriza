@@ -5,12 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.etch.camera.framework.GalleryFragment">
+    tools:context="com.etch.camera.framework.GalleryFragment"
+    tools:ignore="ResourceName">
 
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/cameriza_toolbar_app" />
+
+
 
     <TextView
         android:id="@+id/tvTitle"
@@ -41,10 +44,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:visibility="gone"
         android:layout_marginBottom="32dp"
         android:background="@drawable/bg_green_round_corners"
-        android:textColor="@color/camerizaBlack"
-        android:visibility="gone" />
+        android:textColor="@color/camerizaBlack" />
 
 
 </RelativeLayout>

@@ -1,14 +1,17 @@
-package com.etch.camera
+package com.etch.camera.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.etch.camera.data.CamerizaImageModel
+import com.etch.camera.ImagesUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-
-class ImageViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ImageViewModel @Inject constructor(
     private val imagesUseCase: ImagesUseCase,
 ) : ViewModel(),
     CoroutineScope {

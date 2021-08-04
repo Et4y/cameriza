@@ -5,9 +5,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import com.etch.camera.ImagesUseCase
+import dagger.hilt.EntryPoint
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -15,7 +15,7 @@ internal class AppModule {
 
     @Singleton
     @Provides
-    fun providersFilePath(application: Application): ImagesUseCase {
+    fun providesImagesUseCase(application: Application): ImagesUseCase {
         return ImagesUseCase(application)
     }
 

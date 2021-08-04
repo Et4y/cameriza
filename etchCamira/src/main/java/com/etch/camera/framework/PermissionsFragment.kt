@@ -24,13 +24,12 @@ private val PERMISSIONS_REQUIRED =
  */
 class PermissionsFragment : Fragment() {
 
+
     private val requestMultiplePermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             permissions.entries.forEach {
                 if (it.value) {
                     (activity as Cameriza).addFragmentWithoutBack(GalleryFragment(), null, "")
-                } else {
-                    activity?.finish()
                 }
             }
         }

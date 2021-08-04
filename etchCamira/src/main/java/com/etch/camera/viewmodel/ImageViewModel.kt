@@ -13,8 +13,7 @@ import kotlin.coroutines.CoroutineContext
 @HiltViewModel
 class ImageViewModel @Inject constructor(
     private val imagesUseCase: ImagesUseCase,
-) : ViewModel(),
-    CoroutineScope {
+) : ViewModel(), CoroutineScope {
 
 
     private val job = Job()

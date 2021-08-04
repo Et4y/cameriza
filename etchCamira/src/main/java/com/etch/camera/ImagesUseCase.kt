@@ -1,5 +1,6 @@
 package com.etch.camera
 
+import android.app.Activity
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
@@ -10,14 +11,16 @@ import android.util.Log
 import com.etch.camera.data.CamerizaImageModel
 import com.etch.camera.data.Video
 import com.etch.camera.framework.Cameriza
+import dagger.assisted.Assisted
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class ImagesUseCase @Inject constructor(val context: Context) {
 
 
     fun loadImagesFromSDCard(): ArrayList<CamerizaImageModel> {
-
 
         val cursor: Cursor?
         val listOfAllImages = ArrayList<CamerizaImageModel>()
@@ -71,7 +74,7 @@ class ImagesUseCase @Inject constructor(val context: Context) {
         return listOfAllImages
     }
 
-    fun getVideos() : ArrayList<Video> {
+    fun getVideos(): ArrayList<Video> {
         val videoList = ArrayList<Video>()
 
         val collection =
@@ -127,8 +130,6 @@ class ImagesUseCase @Inject constructor(val context: Context) {
                 )
 
 
-
-
                 // Stores column values and the contentUri in a local object
                 // that represents the media file.
                 videoList.add(Video(contentUri, name, duration, size))
@@ -139,7 +140,7 @@ class ImagesUseCase @Inject constructor(val context: Context) {
         return videoList
     }
 
-    fun getFiles() : ArrayList<Video> {
+    fun getFiles(): ArrayList<Video> {
         val videoList = ArrayList<Video>()
 
         val collection = MediaStore.Files.getContentUri(
@@ -191,8 +192,6 @@ class ImagesUseCase @Inject constructor(val context: Context) {
                     MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                     id
                 )
-
-
 
 
                 // Stores column values and the contentUri in a local object

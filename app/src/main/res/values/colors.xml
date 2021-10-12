@@ -1,16 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="transparent">#00000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="icActive">#FFFFFFFF</color>
-    <color name="icFocused">#DDFFFFFF</color>
-    <color name="icPressed">#AAFFFFFF</color>
-    <color name="colorPrimaryPix">#075e54</color>
-    <color name="colorPrimaryLightPix">#80075e54</color>
+
+    <color name="colorPrimary">#16A340</color>
+    <color name="colorPrimaryDark">#16A340</color>
+    <color name="colorAccent">#1F70BD</color>
+    <color name="colorAccentDark">#0B5BB2</color>
+    <color name="blue">#85428FD8</color>
+    <color name="gray">#F3F3F3</color>
+    <color name="grayTrans">#34DDDDDD</color>
+    <color name="grayTrans2">#D7DDDDDD</color>
+    <color name="grayTrans3">#48DDDDDD</color>
+    <color name="grayMid">#E1E1E1</color>
+    <color name="grayDark">#696D70</color>
+    <color name="grayDarker">#565656</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#52808080</color>
+    <color name="black">#000000</color>
+    <color name="yellow">#FCB901</color>
+    <color name="background">#F0F0F0</color>
+    <color name="green">#33691E</color>
+    <color name="greenLight">#E2FDC7</color>
+    <color name="orange">#E65100</color>
+    <color name="redDark">#BC251A</color>
+
+    <color name="backColor">#FFFFFF</color>
+    <color name="textColor">#ECE7F2</color>
+    <color name="iconColor">#ECE7F2</color>
+    <color name="iconSelectedColor">#FFFFFF</color>
+    <color name="white_transparent">#80EFEFEF</color>
+
+    <color name="icPressed">#99FFFFFF</color>
+    <color name="icFocused">#99FFFFFF</color>
+    <color name="icActive">#99FFFFFF</color>
+
+    <!--<color name="progress_primary">#fff</color>-->
+    <color name="progress_primary">@color/white</color>
+    <color name="progress_secondary">@color/gray_scale</color>
+    <color name="progress_max_active">@color/white</color>
+
+    <color name="gray_scale">#8affffff</color>
+    <color name="my_message_bg">#CCEFDC</color>
+    <color name="other_message_bg">#CCE3F2</color>
+
 </resources>

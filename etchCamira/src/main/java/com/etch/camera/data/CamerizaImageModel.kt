@@ -7,4 +7,5 @@ class CamerizaImageModel {
     var type: String? = null
     var image: String = ""
     var uri: Uri? = null
+
 }
